@@ -3,6 +3,8 @@
 
 # 用法
 类似fmt.printf()用法，支持三个日志级别
+```
 tlog.Infof("hello")
 tlog.Warnf()
 tlog.Errorf()
+```
