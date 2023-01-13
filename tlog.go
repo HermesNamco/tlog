@@ -18,19 +18,19 @@ func init() {
 		FunctionKey:    "func",
 		StacktraceKey:  "stacktrace",
 		LineEnding:     "\n",
-		EncodeTime:     zapcore.EpochTimeEncoder,
-		EncodeLevel:    zapcore.LowercaseLevelEncoder,
+		EncodeTime:     zapcore.ISO8601TimeEncoder,
+		EncodeLevel:    zapcore.LowercaseColorLevelEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 	})
-	core := zapcore.NewCore(encoder, getLogWriter(), zapcore.DebugLevel)
+	core := zapcore.NewCore(encoder, getLogWriter(), zapcore.InfoLevel)
 	logger := zap.New(core, zap.AddCaller())
 	Logger = logger.Sugar()
 }
 
 func getLogWriter() zapcore.WriteSyncer {
 	return zapcore.AddSync(&lumberjack.Logger{
-		Filename:   "./myLog",
+		Filename:   "./tLog",
 		MaxSize:    10,
 		MaxAge:     7,
 		MaxBackups: 10,
