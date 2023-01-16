@@ -9,6 +9,7 @@ func TestInfof(t *testing.T) {
 	}
 	arg := make([]string, 0)
 	arg = append(arg, "World")
+
 	tests := []struct {
 		name string
 		args args

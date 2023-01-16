@@ -1,1 +1,0 @@
-2023-01-13T17:03:16.438+0800	[34minfo[0m	tlog/tlog.go:42	github.com/HermesNamco/tlog.Infof	Hello {Hello %v world}

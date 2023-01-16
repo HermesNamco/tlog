@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var Logger *zap.SugaredLogger
+var tlog *zap.SugaredLogger
 
 func init() {
 	encoder := zapcore.NewConsoleEncoder(zapcore.EncoderConfig{
@@ -19,13 +19,13 @@ func init() {
 		StacktraceKey:  "stacktrace",
 		LineEnding:     "\n",
 		EncodeTime:     zapcore.ISO8601TimeEncoder,
-		EncodeLevel:    zapcore.LowercaseColorLevelEncoder,
-		EncodeDuration: zapcore.SecondsDurationEncoder,
+		EncodeLevel:    zapcore.LowercaseLevelEncoder,
+		EncodeDuration: zapcore.StringDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 	})
 	core := zapcore.NewCore(encoder, getLogWriter(), zapcore.InfoLevel)
-	logger := zap.New(core, zap.AddCaller())
-	Logger = logger.Sugar()
+	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
+	tlog = logger.Sugar()
 }
 
 func getLogWriter() zapcore.WriteSyncer {
@@ -39,13 +39,13 @@ func getLogWriter() zapcore.WriteSyncer {
 }
 
 func Infof(template string, args ...interface{}) {
-	Logger.Infof(template, args...)
+	tlog.Infof(template, args...)
 }
 
 func Warnf(template string, args ...interface{}) {
-	Logger.Warnf(template, args...)
+	tlog.Warnf(template, args...)
 }
 
 func Errorf(template string, args ...interface{}) {
-	Logger.Errorf(template, args...)
+	tlog.Errorf(template, args...)
 }
